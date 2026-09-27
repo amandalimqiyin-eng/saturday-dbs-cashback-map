@@ -746,9 +746,9 @@ html.is-dark .infobtn .moon{display:none}
 .suggest .t small{display:block;color:var(--ink-3);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .suggest mark{background:var(--sun-soft);color:inherit;border-radius:3px}
 .suggest .empty{padding:10px 14px;color:var(--ink-2);font-size:14px}
-.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:2px 2px 4px}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 11px;font-size:13px;font-weight:600;color:var(--ink-2);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.chip{flex:none;display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--ink-2);box-shadow:0 1px 2px rgba(0,0,0,.06)}
 .chip .dot{width:9px;height:9px;border-radius:50%}
 .chip[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);background:var(--paper)}
 .chip[aria-pressed="false"]{opacity:.55}
@@ -929,11 +929,11 @@ html.is-dark .infobtn .moon{display:none}
 <script>
 (function(){
 const CATS=[
-  {k:0,name:'Heartland shops',short:'Shop'},
-  {k:1,name:'Hawker centres',short:'Hawker'},
-  {k:2,name:'Wet markets',short:'Wet market'},
-  {k:3,name:'Coffeeshops',short:'Coffeeshop'},
-  {k:4,name:'Industrial canteens',short:'Canteen'}
+  {k:0,name:'Heartland shops',short:'Shop',chip:'Shops'},
+  {k:1,name:'Hawker centres',short:'Hawker',chip:'Hawkers'},
+  {k:2,name:'Wet markets',short:'Wet market',chip:'Wet markets'},
+  {k:3,name:'Coffeeshops',short:'Coffeeshop',chip:'Coffeeshops'},
+  {k:4,name:'Industrial canteens',short:'Canteen',chip:'Canteens'}
 ];
 const $=s=>document.querySelector(s);
 const root=document.documentElement;
@@ -983,7 +983,7 @@ function domCat(L){let b=-1,bn=0;for(const k of active){if(L.cc[k]>bn){bn=L.cc[k
 // ---------- chips / legend ----------
 function buildChips(){
   const box=$('#chips');
-  box.innerHTML=CATS.map(c=>`<button class="chip" data-k="${c.k}" aria-pressed="true"><span class="dot" style="background:var(--c${c.k})"></span>${c.name}</button>`).join('');
+  box.innerHTML=CATS.map(c=>`<button class="chip" data-k="${c.k}" aria-pressed="true" title="${c.name}"><span class="dot" style="background:var(--c${c.k})"></span>${c.chip}</button>`).join('');
   box.addEventListener('click',e=>{
     const b=e.target.closest('.chip');if(!b)return;const k=+b.dataset.k;
     if(active.has(k)&&active.size===1){CATS.forEach(c=>active.add(c.k));}
